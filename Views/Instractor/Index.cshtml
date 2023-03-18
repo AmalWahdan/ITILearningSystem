@@ -1,0 +1,78 @@
+﻿@model   List<Instructor>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <div id="myModalContent"></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row  justify-content-center">
+        <div class="col-lg-12  mb-3">
+            <h1> <a class="btn btn-dark" href="/Instractor/New">Add Instructor</a> </h1>
+            <table class="table">
+                <thead class ="table-dark">
+                    <tr>
+                        <th scope="col">Instructor Image</th>
+                        <th scope="col">Instructor Name</th>
+                        <th scope="col">Instructor Address</th>
+                        <th scope="col">Instructor Salary</th>
+                        <th scope="col">Instructor Course</th>
+                        <th scope="col">Instructor Department</th>
+                        <th scope="col">Action1</th>
+                        <th scope="col">Action2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Instructor ins in Model)
+                    {
+                        <tr >
+                            <td> <img src="~/images/@ins.Image" class="card-img-top rounded p-0 m-0" height="40px" width="20px" alt="..."></td>
+                            <td>@ins.Name</td>
+                            <td>@ins.Address</td>
+                            <td>@ins.Salary</td>
+                            <td>@ins.Course.Name</td>
+                            <td>@ins.Department.Name</td>
+                            <td><a class="btn btn-outline-warning" href="/Instractor/Edit/@ins.Id">Edit</a> </td>
+                            <td><a class="btn btn-outline-dark" href="#" onclick="GetData(@ins.Id)">ShowDetails</a> </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        function GetData(Id){
+            console.log(Id);
+            event.preventDefault();
+            $.ajax({
+                url: "@Url.Action("DetailsPartial","Instractor")",
+                data:{ "id":Id},
+                success: function (result) {
+                    console.log(result);
+                    $('#myModalContent').html(result);
+                    $('#exampleModalCenter').modal('show');
+                    setTimeout(function () {
+                        $('#exampleModalCenter').modal('hide');
+                    }, 10000);
+                }
+            });
+        }
+    </script>
+    }
+

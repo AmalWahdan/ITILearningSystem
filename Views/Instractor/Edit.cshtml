@@ -1,0 +1,58 @@
+﻿@model InstractorDeptCourseVM
+
+<div class="container-fluid">
+    <div class="row  justify-content-center">
+        <div class="col-lg-8 mb-3">
+
+<div id="frm" class="shadow-lg  bg-white  rounded  p-5">
+    <form method="post" action="/Instractor/Edit/@Model?.id">
+    <label for="Name" class="form-label">Name</label>
+        <input type="text" class="form-control" name="Name" id="Name" value="@Model?.Name">
+        <label for="Image" class="form-label">Image</label>
+        <input type="text" class="form-control" name="Image" id="Image"  value="@Model?.Image">
+        <label for="Address" class="form-label">Address</label>
+        <input type="text" class="form-control" name="Address" id="Address" value="@Model?.Address">
+        <label for="Salary" class="form-label">Salary</label>
+        <input type="number" class="form-control" name="Salary" id="Salary" value="@Model?.Salary">
+
+        <label for="Crs_Id" class="form-label">Department</label>
+        <select name="Crs_Id" id="Crs_Id" class="form-select">
+
+            @foreach (Course itemCrs in Model.Courses)
+            {
+                @if (Model.Crs_Id == itemCrs.Id)
+                {
+                    <option value="@itemCrs.Id" selected>@itemCrs.Name</option>
+                }
+                else
+                {
+                    <option value="@itemCrs.Id" >@itemCrs.Name</option>
+                }
+            }
+        </select>
+        <label for="Dept_Id" class="form-label">Department</label>
+        <select name="Dept_Id" id="Dept_ID" class="form-select">
+
+            @foreach (Department itemDept in Model.Departments)
+            {
+                @if (Model.Dept_Id == itemDept.Id)
+                {
+                    <option value="@itemDept.Id" selected>@itemDept.Name</option>
+                }
+                else
+                {
+                    <option value="@itemDept.Id">@itemDept.Name</option>
+                }
+            }
+
+        </select>
+    <button id="btn5" type="submit" class="btn btn-dark mt-5 form-control">Submit</button>
+    </form>
+</div>
+</div>
+    </div>
+</div>
+
+
+
+

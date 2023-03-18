@@ -1,0 +1,44 @@
+﻿@model List<Course>
+<div class="container-fluid">
+    <div class="row  justify-content-center">
+        <div class="col-lg-10  mb-3">
+            <h1> <a class="btn btn-dark" href="/Course/New">Add Course</a> </h1>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Course Name</th>
+                        <th scope="col"> Course Degree</th>
+                        <th scope="col">Course MinDegree</th>
+                        <th scope="col">Instructor Department</th>
+                        <th scope="col">Action1</th>
+                        <th scope="col">Action2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Course s in Model)
+                    {
+                        <tr>
+                            <td>@s.Name</td>
+                            <td>@s.Degree</td>
+                            <td>@s.minDegree</td>
+                            <td>@s.Department.Name</td>
+                            <td><a class="btn btn-outline-warning" asp-action="Edit" asp-controller="Course" asp-route-id="@s.Id">Edit</a> </td>
+                            <td><a class="btn btn-outline-danger" asp-action="DeleteCourse" asp-controller="Course" asp-route-id="@s.Id" onclick="return confirmDelete();">Delete</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete() {
+    var result = confirm("Are you sure you want to delete");
+    if (result) {
+        return true;
+    } else {
+        return false;
+    }
+}
+</script>

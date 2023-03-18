@@ -1,0 +1,21 @@
+﻿@model Instructor
+
+<div class="container-fluid">
+    <div class="row text-center ">
+        <div class="col-lg-4 p-4 ms-5 ">
+            <div class="card" style="width: 18rem;">
+                <img src="~/images/@Model.Image" class="card-img-top rounded-lg" height="200px" width="200px" alt="...">
+                <div class="card-body">
+                    <h5 class="card-text">Name: @Model.Name</h5>
+                    <p class="card-text ">Address: @Model.Address</p>
+                    <p class="lead text-warning">Salary: @Model.Salary </p>
+                </div>
+                <div class="mb-3">
+                    <a href="/Instractor/Index" class="btn btn-primary">Back To All</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

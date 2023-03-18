@@ -1,0 +1,63 @@
+﻿@model InstractorDeptCourseVM
+@{
+    SelectList depts = new SelectList(Model.Departments, "Id", "Name");
+}
+
+
+<div class="container-fluid">
+    <div class="row  justify-content-center">
+        <div class="col-lg-8 mb-3">
+<div id="frm" class="shadow-lg  bg-white  rounded  p-5">
+  
+    <form method="post" action="/Instractor/New">
+        <label for="Name" class="form-label">Name</label>
+        <input type="text" class="form-control" name="Name" id="Name" value="@Model?.Name">
+        <label for="Image" class="form-label" type="file">Image</label>
+        <input type="text" class="form-control" name="Image" id="Image" value="@Model?.Image">
+        <label for="Address" class="form-label">Address</label>
+        <input type="text" class="form-control" name="Address" id="Address" value="@Model?.Address">
+        <label for="Salary" class="form-label">Salary</label>
+        <input type="number" class="form-control" name="Salary" id="Salary" value="@Model?.Salary">
+
+       
+            <label asp-for="Dept_Id" >Department</label>
+                    <select asp-for="Dept_Id" class="form-select" asp-items="depts" onchange="GetICourse()">
+                       <option value="0">-- Select Department --</option>
+                    </select>
+            
+            <label asp-for="Crs_Id">Courses</label>
+            <Select class="form-control" asp-for="Crs_Id"></Select>
+
+        <button id="btn5" type="submit" class="btn btn-dark mt-5 form-control">Submit</button>
+    </form>
+</div>
+</div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="/lib/jquery/dist/jquery.min.js">
+    </script>
+    <script>
+        function GetICourse() {
+            var deptID = $("#Dept_Id").val();
+
+            $("#Crs_Id").html("");
+            $.ajax({
+                url: "/Instractor/GetCrsByDeptID",
+
+                data: { "deptID": deptID },
+                success: function (result) {
+                   
+                  
+                    for (let item of result) {
+                        $("#Crs_Id").append("<option value=" + item.id + ">" + item.name + "</option>")
+                        console.log(item.id);
+                    }
+
+                }
+            });
+        }
+    </script>
+}

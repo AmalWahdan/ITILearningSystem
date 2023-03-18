@@ -1,0 +1,46 @@
+﻿@model CourseDeptVM
+@{
+   
+    SelectList depts = new SelectList(@Model.Departments, "Id", "Name");}
+
+<div class="container-fluid">
+    <div class="row  justify-content-center">
+        <div class="col-lg-8 mb-3">
+            <div id="frm" class="shadow-lg  bg-white  rounded  p-5">
+
+                    <form method="post" asp-action="New" asp-controller="Course">
+                    <label  asp-for="Name" class="form-label"></label>
+                    <input  class="form-control" asp-for="Name">
+                     <span  asp-validation-for="Name" class="text-danger d-block"></span>
+
+                    <label  asp-for="Degree" class="form-label"></label>
+                    <input  class="form-control" asp-for="Degree">
+                    <span asp-validation-for="Degree" class="text-danger  d-block"></span>
+
+
+                    <label  asp-for="minDegree" class="form-label"></label>
+                    <input  class="form-control" asp-for="minDegree">
+                    <span asp-validation-for="minDegree" class="text-danger  d-block"></span>
+
+                    <label asp-for=Dept_Id class="form-label"></label>
+
+                    <select class="form-control" asp-for="Dept_Id" asp-items="depts">
+                        <option value="0">--Select Department--</option>
+                    </select>
+                    <span asp-validation-for="Dept_Id" class="text-danger  d-block"></span>
+
+                    <button id="btn5" type="submit" class="btn btn-dark mt-5 form-control">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+}
+
