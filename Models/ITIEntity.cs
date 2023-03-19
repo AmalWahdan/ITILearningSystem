@@ -5,15 +5,14 @@ namespace LearningSystem.Models
     public class ITIEntity : DbContext
     {
 
-       public ITIEntity():base()
+
+
+        public ITIEntity(DbContextOptions options) : base(options)
         {
 
         }
-        protected override void  OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-FUG26SB;Database=ITISystem;Trusted_Connection=True;TrustServerCertificate=True;");
-            base.OnConfiguring(optionsBuilder);
-        }
+
+      
 
         public DbSet<Department> Departments { get; set; }
         public DbSet<Course> Courses { get; set; }

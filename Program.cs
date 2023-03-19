@@ -1,3 +1,7 @@
+using LearningSystem.Models;
+using LearningSystem.Repository;
+using Microsoft.EntityFrameworkCore;
+
 namespace LearningSystem
 {
     public class Program
@@ -13,6 +17,13 @@ namespace LearningSystem
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
             });
 
+
+
+            builder.Services.AddDbContext<ITIEntity>(options =>
+             options.UseSqlServer(builder.Configuration.GetConnectionString("cs")));
+
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

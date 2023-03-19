@@ -1,22 +1,33 @@
 ﻿using LearningSystem.Models;
+using LearningSystem.Repository;
 using LearningSystem.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace LearningSystem.Controllers
 {
     public class CourseController : Controller
     {
-        ITIEntity context = new ITIEntity();
+
+        ICourseRepository courseRepository;
+        IDepartmentRepository departmentRepository;
+        public CourseController(ICourseRepository courseRepository,IDepartmentRepository departmentRepository)
+        {
+            this.courseRepository = courseRepository;
+            this.departmentRepository = departmentRepository;
+        }
+
         public IActionResult Index()
         {
-            List<Course> instructorsModel = context.Courses.Include(s=>s.Department).ToList();
+            List<Course> instructorsModel = courseRepository.GetAll();
             return View(instructorsModel);
         }
         public IActionResult New()
         {
             CourseDeptVM vm = new CourseDeptVM();
-            List<Department> deptList = context.Departments.ToList();
+            List<Department> deptList =departmentRepository.GetAll();
             vm.Departments = deptList;
             return View(vm);
         }
@@ -30,8 +41,7 @@ namespace LearningSystem.Controllers
             {
                 try
                 {
-                    context.Courses.Add(Crs);
-                    context.SaveChanges();
+                    courseRepository.Insert(Crs);
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -42,7 +52,7 @@ namespace LearningSystem.Controllers
             }
 
             CourseDeptVM vm = new CourseDeptVM();
-            List<Department> deptList = context.Departments.ToList();
+            List<Department> deptList = departmentRepository.GetAll();
             vm.Departments = deptList;
             vm.Id = Crs.Id;
             vm.Name = Crs.Name;
@@ -54,9 +64,9 @@ namespace LearningSystem.Controllers
 
         public IActionResult Edit(int id)
         {
-            Course Crs = context.Courses.FirstOrDefault(s => s.Id == id);
+            Course Crs = courseRepository.GetById(id);
             CourseDeptVM vm = new CourseDeptVM();
-            List<Department> deptList = context.Departments.ToList();
+            List<Department> deptList = departmentRepository.GetAll();
             vm.Departments = deptList;
             vm.Id = Crs.Id;
             vm.Name = Crs.Name;
@@ -73,8 +83,7 @@ namespace LearningSystem.Controllers
             {
                 try
                 {
-                    context.Update(Crs);
-                    context.SaveChanges();
+                    courseRepository.Update(Crs);
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -83,7 +92,7 @@ namespace LearningSystem.Controllers
                 }
             }
             CourseDeptVM vm = new CourseDeptVM();
-            List<Department> deptList = context.Departments.ToList();
+            List<Department> deptList = departmentRepository.GetAll();
             vm.Departments = deptList;
             vm.Id = Crs.Id;
             vm.Name = Crs.Name;
@@ -96,22 +105,29 @@ namespace LearningSystem.Controllers
 
         public IActionResult DeleteCourse(int id)
         {
-            Course course = context.Courses.FirstOrDefault(c=>c.Id==id);
-
-            if (course != null)
-            {
-                context.Courses.Remove(course);
-                context.SaveChanges();
-            }
+            courseRepository.Delete(id);
             return RedirectToAction("Index");
         }
 
         public IActionResult CheckminDegree(int minDegree, int Degree)
         {
-            if (minDegree<Degree)
+            if (minDegree < Degree)
                 return Json(true);
             else
                 return Json(false);
+        }
+
+        public IActionResult CheckName(string Name, int Id)
+        {
+            Course course = courseRepository.GetByName(Name);
+            //Course courseReq = courseRepository.GetById(Id);
+
+           if (course == null /*|| (course != null && course.Id == courseReq.Id)*/)
+            {
+                return Json(true);
+            }
+            return Json(false);
+
         }
 
     }

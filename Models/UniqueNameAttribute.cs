@@ -7,23 +7,23 @@ namespace LearningSystem.Models
     {
         public string Msg { get; set; }
 
-        ITIEntity context = new ITIEntity();
+        //ITIEntity context = new ITIEntity();
 
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
-        {
+        //protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        //{
 
-            string name = value.ToString();
+        //    string name = value.ToString();
 
-            Course courseReq = validationContext.ObjectInstance as Course;
+        //    Course courseReq = validationContext.ObjectInstance as Course;
             
-            Course course = context.Courses.FirstOrDefault(c => c.Name == name);
+        //    Course course = context.Courses.FirstOrDefault(c => c.Name == name);
 
-            if (course == null || (course != null && course.Id == courseReq.Id))
-            {
-                return ValidationResult.Success;
-            }
-            return new ValidationResult("Name is Exists");
-        }
+        //    if (course == null || (course != null && course.Id == courseReq.Id))
+        //    {
+        //        return ValidationResult.Success;
+        //    }
+        //    return new ValidationResult("Name is Exists");
+        //}
 
     }
 }

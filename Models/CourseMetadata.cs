@@ -14,9 +14,13 @@ namespace LearningSystem.Models
     {
 
         public int Id { get; set; }
+
         [MinLength(2, ErrorMessage = "Name must be more than 1 Char")]
         [MaxLength(20, ErrorMessage = "Name must be less than 21 letter")]
-        [UniqueName(Msg = "Name  must be unique")]
+
+
+        // [UniqueName(Msg = "Name  must be unique")]
+        [Remote("CheckName", "Course", AdditionalFields = "Id", ErrorMessage = "Course Name must unique")]
         public string Name { get; set; }
 
         [Range(minimum: 50, maximum: 100)]

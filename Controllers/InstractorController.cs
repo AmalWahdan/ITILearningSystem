@@ -9,7 +9,12 @@ namespace LearningSystem.Controllers
 {
     public class InstractorController : Controller
     {
-        ITIEntity context = new ITIEntity();
+        ITIEntity context;
+        public InstractorController(ITIEntity context)
+        {
+            this.context = context;
+
+        }
         public IActionResult Index()
         {
             List<Instructor> instructorsModel = context.Instructors.Include(i => i.Course).Include(i => i.Department).ToList();

@@ -7,7 +7,12 @@ namespace LearningSystem.Controllers
 {
     public class CrsResultController : Controller
     {
-        ITIEntity context = new ITIEntity();
+        ITIEntity context;
+        public CrsResultController(ITIEntity context)
+        {
+            this.context = context;
+        }
+
         public IActionResult GetResult(int id , int Crs_id)
         {
             TraineeCourseDegreeViewModel Vmodel = new TraineeCourseDegreeViewModel();
